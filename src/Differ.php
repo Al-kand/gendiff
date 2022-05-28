@@ -23,7 +23,6 @@ function genDiff($pathToFile1, $pathToFile2)
     $result = array_reduce(
         $keys,
         function ($carry, $key) use ($arr1, $arr2) {
-            
             if (array_key_exists($key, $arr1) && array_key_exists($key, $arr2) && $arr1[$key] === $arr2[$key]) {
                 $carry .= "    {$key}: " . json_encode($arr1[$key]) . PHP_EOL;
             } else {
@@ -38,6 +37,5 @@ function genDiff($pathToFile1, $pathToFile2)
         },
         ''
     );
-    
     return "{" . PHP_EOL . strtr($result, ['"' => '', '\"' => '"']) . "}" . PHP_EOL;
 }
