@@ -3,16 +3,14 @@
 namespace Differ\Differ;
 
 use function Differ\Parsers\parse;
-use function Differ\Formatters\stylish;
+use function Differ\Formatters\format;
 
 function genDiff(string $pathToFile1, string $pathToFile2, string $format = 'stylish'): string
 {
     $obj1 = parse($pathToFile1);
     $obj2 = parse($pathToFile2);
 
-    if ($format === 'stylish') {
-        return stylish(iter($obj1, $obj2));
-    }
+    return format(iter($obj1, $obj2), $format);
 }
 
 function iter(object $obj1, object $obj2)
