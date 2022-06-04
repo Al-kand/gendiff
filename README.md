@@ -7,6 +7,7 @@
 [![asciicast](https://asciinema.org/a/4Km8yGd6KEXoL9J4LCpxAWDmC.svg)](https://asciinema.org/a/4Km8yGd6KEXoL9J4LCpxAWDmC)
 #### YAML
 [![asciicast](https://asciinema.org/a/lK3nfxsaeZogLiyb7ue5yznt4.svg)](https://asciinema.org/a/lK3nfxsaeZogLiyb7ue5yznt4)
-#### format
+#### format stylish
 [![asciicast](https://asciinema.org/a/psApWFRYHixVLINItTv5ca1gL.svg)](https://asciinema.org/a/psApWFRYHixVLINItTv5ca1gL)
-
+#### format plain
+[![asciicast](https://asciinema.org/a/QCBcIE6cYDq87pK07CyZl3yBm.svg)](https://asciinema.org/a/QCBcIE6cYDq87pK07CyZl3yBm)
