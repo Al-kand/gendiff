@@ -4,6 +4,7 @@ namespace Differ\Differ;
 
 use function Differ\Parsers\parse;
 use function Differ\Formatters\format;
+use function Functional\sort as f_sort;
 
 function genDiff(string $pathToFile1, string $pathToFile2, string $format = 'stylish'): string
 {
@@ -17,8 +18,7 @@ function makeDiffData(object $obj1, object $obj2): array
 {
     $keys1 = array_keys(get_object_vars($obj1));
     $keys2 = array_keys(get_object_vars($obj2));
-    $keys =  array_unique(array_merge($keys1, $keys2));
-    sort($keys);
+    $keys =  sortArrayValue(array_unique(array_merge($keys1, $keys2)));
 
     $result = array_map(
         fn ($key) => makeDiffNode($key, $obj1, $obj2),
@@ -62,20 +62,28 @@ function makeNode($data)
         return $data;
     }
 
-    $keys = array_keys(get_object_vars($data));
-    sort($keys);
+    $keys = sortArrayValue(array_keys(get_object_vars($data)));
 
     $result = array_map(
-        fn ($key) => is_object($data->$key) ?
-        [
+        fn ($key) => is_object($data->$key) ?            [
             'name' => $key,
             'children' => makeNode($data->$key)
         ] :
-        [
-            'name' => $key,
-            'value' => makeNode($data->$key)
-        ],
+            [
+                'name' => $key,
+                'value' => makeNode($data->$key)
+            ],
         $keys
     );
     return $result;
+}
+
+function sortArrayValue(array $array)
+{
+    return f_sort(
+        $array,
+        function ($left, $right) {
+            return strcmp($left, $right);
+        }
+    );
 }
