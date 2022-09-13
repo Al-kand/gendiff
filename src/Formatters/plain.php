@@ -24,7 +24,7 @@ function makePlainLine(array $node, string $keys): string
         array_key_exists($type, $node)
     );
 
-    $type = implode(' ', $currentTypes);
+    $type = count($currentTypes) > 1 ? 'updated' : implode('', $currentTypes);
 
     switch ($type) {
         case 'children':
@@ -36,7 +36,7 @@ function makePlainLine(array $node, string $keys): string
             $value = getValue([$node['currentValue']]);
             $message = "was added with value: {$value}";
             break;
-        case 'expectedValue currentValue':
+        case 'updated':
             $value1 = getValue([$node['expectedValue']]);
             $value2 = getValue([$node['currentValue']]);
             $message = "was updated. From {$value1} to {$value2}";
