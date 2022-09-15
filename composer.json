@@ -3,7 +3,7 @@
   "bin": [
     "bin/gendiff"
   ],
-  "description": "hexlet/code",
+  "description": "Utility to show of differences between two JSON or YAML files",
   "license": "proprietary",
   "autoload": {
     "psr-4": {
