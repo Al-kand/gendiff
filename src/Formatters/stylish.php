@@ -19,7 +19,6 @@ function makeLine(array $node, int $depth = 0): string
 {
     $types = ['children', 'value', 'expectedValue', 'currentValue'];
     $key = $node['name'];
-    $indent = str_repeat(TAB, $depth);
 
     $currentTypes = array_filter(
         $types,
@@ -28,17 +27,21 @@ function makeLine(array $node, int $depth = 0): string
     );
 
     $lines = array_map(
-        function ($type) use ($key, $indent, $node, $depth) {
+        function ($type) use ($key, $node, $depth) {
             $currentNode = $node[$type];
-            if (is_array($currentNode)) {
-                return $indent . getPrefix($type) . $key . ": " . stylish($currentNode, $depth + 1);
-            }
-            return $indent . getPrefix($type) . $key . ": " . toString([$currentNode]);
+            $stringKey = makeIndent($depth) . getPrefix($type) . $key . ": ";
+            $value = is_array($currentNode) ? stylish($currentNode, $depth + 1) : toString([$currentNode]);
+            return $stringKey . $value;
         },
         $currentTypes
     );
 
     return implode(PHP_EOL, $lines);
+}
+
+function makeIndent(int $depth): string
+{
+    return str_repeat(TAB, $depth);
 }
 
 function getPrefix(string $type): string
