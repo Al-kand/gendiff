@@ -8,7 +8,7 @@ Utility to show of differences between two JSON or YAML files
 
 ## Requirements
 The following tools are required in order to start the installation.
-- php 7.4
+- php 8.0
 - composer
 
 ## Install
