@@ -24,12 +24,12 @@ function makePlainLine(array $node, string $keys): string
             $message = "was removed";
             break;
         case 'added':
-            $value = getValue([$node['currentValue']]);
+            $value = stringify($node['currentValue']);
             $message = "was added with value: {$value}";
             break;
         case 'updated':
-            $value1 = getValue([$node['expectedValue']]);
-            $value2 = getValue([$node['currentValue']]);
+            $value1 = stringify($node['expectedValue']);
+            $value2 = stringify($node['currentValue']);
             $message = "was updated. From {$value1} to {$value2}";
             break;
         default:
@@ -38,16 +38,15 @@ function makePlainLine(array $node, string $keys): string
     return "Property '{$path}' {$message}";
 }
 
-function getValue(array $data): string
+function stringify(mixed $data): string
 {
-    if (is_array($data[0])) {
+    if (is_array($data)) {
         return '[complex value]';
     }
 
-    $string = json_encode($data[0]);
-    if ($string === false) {
-        throw new \Exception("Unknown format");
+    if (is_null($data)) {
+        return 'null';
     }
 
-    return str_replace('"', "'", $string);
+    return var_export($data, true);
 }
