@@ -4,7 +4,7 @@ namespace Differ\Tests;
 
 use PHPUnit\Framework\TestCase;
 
-use function Differ\Parsers\parse;
+use function Differ\Differ\readFile;
 use function Differ\Differ\genDiff;
 
 class DifferTest extends TestCase
@@ -21,7 +21,7 @@ class DifferTest extends TestCase
         ];
     }
 
-    public function testParse()
+    public function testReadFile()
     {
         $expected = (object) [
             "common" => (object) [
@@ -50,8 +50,8 @@ class DifferTest extends TestCase
             ]
         ];
 
-        $this->assertEquals($expected, parse($this->files['json1']));
-        $this->assertEquals($expected, parse($this->files['yaml1']));
+        $this->assertEquals($expected, readFile($this->files['json1']));
+        $this->assertEquals($expected, readFile($this->files['yaml1']));
     }
 
     public function testGenDiff()
