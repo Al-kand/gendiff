@@ -30,7 +30,7 @@ function makeLine(array $node, int $depth = 0): string
         function ($type) use ($key, $node, $depth) {
             $currentNode = $node[$type];
             $stringKey = makeIndent($depth) . getPrefix($type) . $key . ": ";
-            $value = is_array($currentNode) ? stylish($currentNode, $depth + 1) : toString([$currentNode]);
+            $value = is_array($currentNode) ? stylish($currentNode, $depth + 1) : toString($currentNode);
             return $stringKey . $value;
         },
         $currentTypes
@@ -55,12 +55,13 @@ function getPrefix(string $type): string
     return TAB;
 }
 
-function toString(array $data): string
+function toString(mixed $data): string
 {
-    $value = $data[0];
-    $string = json_encode($value);
-    if ($string === false) {
-        throw new \Exception("Unknown format");
+    $string = var_export($data, true);
+
+    if (is_null($data)) {
+        return 'null';
     }
-    return trim($string, '"');
+
+    return trim($string, "'");
 }
