@@ -29,7 +29,7 @@ function makeLine(array $node, int $depth = 0): string
     $lines = array_map(
         function ($type) use ($key, $node, $depth) {
             $currentNode = $node[$type];
-            $stringKey = makeIndent($depth) . getPrefix($type) . $key . ": ";
+            $stringKey = makeIndentAndPrefix($depth, $type) . $key . ": ";
             $value = is_array($currentNode) ? stylish($currentNode, $depth + 1) : toString($currentNode);
             return $stringKey . $value;
         },
@@ -39,20 +39,21 @@ function makeLine(array $node, int $depth = 0): string
     return implode(PHP_EOL, $lines);
 }
 
-function makeIndent(int $depth): string
+function makeIndentAndPrefix(int $depth, string $type): string
 {
-    return str_repeat(TAB, $depth);
-}
+    $indent = str_repeat(TAB, $depth + 1);
 
-function getPrefix(string $type): string
-{
     switch ($type) {
         case 'expectedValue':
-            return substr_replace(TAB, '- ', -2);
+            $result = substr_replace($indent, '-', -2, 1);
+            break;
         case 'currentValue':
-            return substr_replace(TAB, '+ ', -2);
+            $result = substr_replace($indent, '+', -2, 1);
+            break;
+        default:
+            $result = $indent;
     }
-    return TAB;
+    return $result;
 }
 
 function toString(mixed $data): string
